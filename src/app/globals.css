@@ -1,26 +1,543 @@
+/* Import Tailwind CSS base styles */
 @import "tailwindcss";
 
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Existing custom properties for the cyberpunk theme */
+  --primary-green: #8DFF4F;
+  --primary-dark-green: #003300;
+  --secondary-lime: #A3FF78;
+  --bg-primary-dark: #0A0F0A;
+  --bg-secondary-dark: #001100;
+  --bg-tertiary-dark: #002200;
+  --bg-card-dark: rgba(15, 25, 15, 0.9);
+  --text-heading: #FFFFFF;
+  --text-body: #C9C9C9;
+  --text-subtle: #8B8B8B;
+  --text-accent: #8DFF4F;
+  --text-brackets: #F6F6F6;
+  --btn-primary-bg: linear-gradient(90deg, #8DFF4F 0%, #4AFF00 100%);
+  --btn-primary-text: #0A0F0A;
+  --btn-secondary-bg: #0A0F0A;
+  --btn-secondary-text: #8DFF4F;
+  --btn-primary-hover-bg: #A3FF78;
+  --btn-secondary-hover-bg: #003300;
+  --card-bg: rgba(15, 25, 15, 0.9);
+  --card-border: rgba(141, 255, 79, 0.2);
+  --card-shadow: 0px 4px 24px rgba(0, 255, 0, 0.15);
+  --icon-fill: #8DFF4F;
+  --icon-bg: rgba(141, 255, 79, 0.1);
+  --gradient-bg-radial: radial-gradient(circle at center, #0A0F0A, #001100, #002200);
+  --gradient-btn-primary: linear-gradient(90deg, #8DFF4F 0%, #4AFF00 100%);
+  --shadow-soft: 0px 4px 24px rgba(0, 255, 0, 0.15);
+  --shadow-strong: 0px 6px 32px rgba(0, 255, 0, 0.25);
+  --font-primary: var(--font-geist-sans);
+  --font-helvetica-bold: 'Helvetica Neue', var(--font-geist-sans);
+  --font-helvetica-medium: 'Helvetica Neue', var(--font-geist-sans);
+  --radius-card: 16px;
+  --radius-button: 30px;
+  --radius-icon: 50%;
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-xxl: 64px;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: hsl(0 85.7% 97.3%);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Existing theme configuration */
+  --color-background: var(--bg-primary-dark);
+  --color-foreground: var(--text-body);
+  --font-sans: var(--font-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base styles */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
+/* Base body styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary-dark);
+  color: var(--text-body);
+  font-family: var(--font-primary);
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Prevent horizontal scrolling on html element */
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Ensure all elements respect viewport width */
+* {
+  box-sizing: border-box;
+}
+
+/* Matrix particle animation - Keyframes for floating animation */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+  100% { transform: translateY(0px) rotate(360deg); }
+}
+
+/* Pulse animation for fingerprint elements */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Bounce animation for scroll indicator */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Glow animation for buttons */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(126, 211, 33, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(126, 211, 33, 0.5); }
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+/* Custom utility classes for consistent styling */
+
+/* Primary button styles */
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-radius: var(--radius-button);
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  background: var(--btn-primary-hover-bg);
+  box-shadow: 0px 4px 20px rgba(141, 255, 79, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  background: #75E644;
+  box-shadow: 0px 2px 12px rgba(141, 255, 79, 0.4);
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 1px solid var(--primary-green);
+  border-radius: var(--radius-button);
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-secondary:hover {
+  background: var(--btn-secondary-hover-bg);
+}
+
+/* Card styles */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-card);
+  padding: var(--spacing-md);
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+  border: 1px solid var(--card-border);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-strong);
+  border: 1px solid var(--primary-green);
+}
+
+/* Heading styles */
+h1 {
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text-heading);
+}
+
+h2 {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-heading);
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-heading);
+}
+
+/* Body text styles */
+.text-large {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-body);
+}
+
+.text-default {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+.text-small {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-subtle);
+}
+
+.text-micro {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-body);
+}
+
+.text-paragraph {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-body);
+}
+
+/* Helvetica Neue Bold font class */
+.font-helvetica-bold {
+  font-family: var(--font-helvetica-bold);
+  font-weight: 700;
+}
+
+/* Helvetica Neue Medium font class */
+.font-helvetica-medium {
+  font-family: var(--font-helvetica-medium);
+  font-weight: 500;
+}
+
+/* Bracket styles */
+.bracket {
+  color: var(--text-brackets);
+}
+
+/* Tagline styles */
+.tagline {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Gradient background pattern - RESTORED background properties for hero section */
+.gradient-bg {
+  background: radial-gradient(circle at center, #004300 0%, #0A0F0A 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Add or update the .centered-text-container class */
+.centered-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* Add or update the .centered-text class */
+.centered-text {
+  font-size: clamp(1rem, 2.5vw, 9.0625rem);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  text-align: center;
+  white-space: normal;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+/* Hide text on very small screens */
+@media screen and (max-width: 480px) {
+  .centered-text {
+    display: none;
+  }
+}
+
+/* Card hover effect */
+.card-hover:hover {
+  transform: translateY(-8px);
+  border: 1px solid var(--primary-green);
+  background: rgba(15, 25, 15, 0.95);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Download card styles */
+.download-card {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  width: 372px;
+  height: 370px;
+}
+
+@supports not (backdrop-filter: blur(15px)) {
+  .download-card {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.download-card:hover {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transform: none;
+}
+
+/* Download button styles */
+.download-btn {
+  background: #7fff00;
+  color: #0a0a0a;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 0 12px rgba(127, 255, 0, 0.5);
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--font-primary);
+}
+
+.download-btn:hover {
+  background: #39ff14;
+  box-shadow: 0 0 16px rgba(57, 255, 20, 0.7);
+  transform: translateY(-2px);
+}
+
+.download-btn:active {
+  background: #2d8f2d;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.download-btn:focus {
+  outline: 2px solid #00ff41;
+  outline-offset: 3px;
+}
+
+.download-btn:disabled {
+  background: #1a1a1a;
+  color: #555555;
+  box-shadow: none;
+}
+
+/* Center the button within the download container */
+.download-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style the download button */
+.download-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #0A0F0A;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: var(--font-helvetica-bold);
+}
+
+/* Change cursor to hand pointer on hover */
+.download-button:hover {
+  cursor: pointer;
+}
+
+/* Style the watch demo button */
+.watch-demo-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: var(--font-helvetica-bold);
+}
+
+/* Change cursor to hand pointer on hover */
+.watch-demo-button:hover {
+  cursor: pointer;
+}
+
+/* Glow animation class */
+.glow-animation {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Prevent horizontal overflow on all elements */
+* {
+  max-width: 100%;
+}
+
+/* Shine border animation */
+@keyframes shine {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  to {
+    background-position: 0% 0%;
+  }
+}
+
+.animate-shine {
+  animation: shine var(--duration) infinite linear;
 }

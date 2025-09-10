@@ -20,6 +20,25 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## New Features
+
+This project has been enhanced with several new UI components:
+
+### ShineBorder Component
+An animated background border effect that adds a dynamic, eye-catching shine to any element. The animation has been tuned for a sleek, sophisticated appearance with slower timing.
+
+### Enhanced Download Page
+The download page now features:
+- TiltedCard (3D tilt effect)
+- StarBorder (Rotating star border effect)
+- ShineBorder (Animated shine effect with sophisticated 12-second timing)
+- All three effects combined for a rich, interactive user experience
+
+### Demo Pages
+- `/shine-demo` - Dedicated shine border demo
+- `/combined-demo` - All effects working together
+- `/animation-test` - Verify the shine border animation is working correctly with different speeds
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
