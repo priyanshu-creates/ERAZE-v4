@@ -4,6 +4,7 @@
 // Import necessary modules
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // DualHeader component for E-RAZE cyberpunk application with scroll-triggered navigation
 export default function DualHeader() {
@@ -76,10 +77,12 @@ export default function DualHeader() {
       {/* E-RAZE Logo (Center) - Made clickable to redirect to homepage */}
       <div className="flex justify-center items-center">
         <Link href="/">
-          <img 
+          <Image 
             src="/gk- symm logo (org).svg" 
             alt="E-RAZE Logo" 
             className="h-8 md:h-10 lg:h-12 w-auto cursor-pointer"
+            width={48}
+            height={48}
           />
         </Link>
       </div>

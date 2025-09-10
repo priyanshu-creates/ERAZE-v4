@@ -2,6 +2,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 
 // Download button component with state management
@@ -36,10 +37,12 @@ export default function DownloadButton() {
             textDecoration: "none"
           }}
         >
-          <img 
+          <Image 
             src="/usericon.svg" 
             alt="User Icon" 
-            className="w-4 h-4 mr-2"
+            width={16}
+            height={16}
+            className="mr-2"
           />
           INDIVIDUAL
         </Link>
@@ -56,10 +59,12 @@ export default function DownloadButton() {
             borderRadius: "25px"
           }}
         >
-          <img 
+          <Image 
             src="/industryicon.svg" 
             alt="Industry Icon" 
-            className="w-4 h-4 mr-2"
+            width={16}
+            height={16}
+            className="mr-2"
           />
           INDUSTRY
         </button>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, CSSProperties } from 'react';
 import { motion, MotionProps } from 'framer-motion';
 
-interface DecryptedTextProps extends MotionProps {
+interface DecryptedTextProps extends Omit<MotionProps, 'children'> {
   text: string;
   speed?: number;
   maxIterations?: number;
@@ -13,7 +13,6 @@ interface DecryptedTextProps extends MotionProps {
   parentClassName?: string;
   encryptedClassName?: string;
   animateOn?: 'hover' | 'view' | 'both';
-  [key: string]: any;
 }
 
 const styles: { [key: string]: CSSProperties } = {

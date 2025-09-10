@@ -4,6 +4,7 @@
 // Import necessary modules
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Header component for E-RAZE cyberpunk application
 export default function Header() {
@@ -55,10 +56,12 @@ export default function Header() {
 
         {/* E-RAZE Logo (Center) */}
         <div className="flex justify-center items-center">
-          <img 
+          <Image 
             src="/gk- symm logo (org).svg" 
             alt="E-RAZE Logo" 
             className="h-8 md:h-10 lg:h-12 w-auto"
+            width={48}
+            height={48}
           />
         </div>
 

@@ -180,7 +180,7 @@ export default function ContactPage() {
             </h2>
             {/* Mission statement description */}
             <p className="text-default">
-              Whether you have questions, seek expert guidance, or need immediate assistance, we're only a click away
+              Whether you have questions, seek expert guidance, or need immediate assistance, we&#39;re only a click away
             </p>
           </div>
         </div>

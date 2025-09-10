@@ -1,8 +1,6 @@
-// Import Link component from Next.js for navigation between pages
+// Import necessary modules from Next.js and other libraries
 import Link from "next/link";
-import HeroNavigation from "./components/HeroNavigation";
-import ScrollIndicator from "./components/ScrollIndicator";
-import NotificationBanner from "./components/NotificationBanner";
+import Image from "next/image";
 
 // Home page component - the main landing page of the website
 export default function Home() {
@@ -143,7 +141,7 @@ export default function Home() {
           }}
         >
           {/* Hero SVG Image - Positioned above all other elements with maximum z-index */}
-          <img 
+          <Image 
             src="/hero.svg" 
             alt="Hero Background" 
             className="relative w-full" // Changed to responsive width
@@ -153,6 +151,8 @@ export default function Home() {
               aspectRatio: '1235/535.94', // Maintain aspect ratio
               width: 'clamp(90%, 77.19rem, 77.19rem)', // Responsive width from 90% to 77.19rem (1235px)
             }}
+            width={1235}
+            height={536}
           />
         </div>
       </section>
@@ -281,7 +281,7 @@ export default function Home() {
               </h2>
               {/* Section description */}
               <p className="text-default mb-8">
-                Whether you have questions, seek expert guidance, or need immediate assistance, we're only a click away
+                Whether you have questions, seek expert guidance, or need immediate assistance, we&#39;re only a click away
               </p>
               {/* Contact button linking to contact page */}
               <Link 

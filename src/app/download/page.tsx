@@ -5,12 +5,8 @@ import TiltedCard from "@/components/ui/tilted-card";
 import StarBorder from "@/components/StarBorder";
 import DecryptedText from "@/components/DecryptedText";
 import { ShineBorder } from "@/components/ShineBorder";
-import { mirage } from 'ldrs';
-import { useState } from 'react';
-import { GooeyText } from "@/components/ui/gooey-text-morphing";
-
-// Register the mirage loader
-mirage.register();
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function DownloadPage() {
   // Define download options data
@@ -42,6 +38,13 @@ export default function DownloadPage() {
   const [loadingStates, setLoadingStates] = useState<{[key: string]: boolean}>({});
   // State to track which button has completed installation
   const [successStates, setSuccessStates] = useState<{[key: string]: boolean}>({});
+
+  // Register the mirage loader only on the client side
+  useEffect(() => {
+    import('ldrs').then(({ mirage }) => {
+      mirage.register();
+    });
+  }, []);
 
   // Function to handle download button click
   const handleDownloadClick = (id: string) => {
@@ -158,10 +161,12 @@ export default function DownloadPage() {
                     }}
                   >
                     <div className="flex justify-center mb-6">
-                      <img 
+                      <Image 
                         src={option.icon} 
                         alt={`${option.title} icon`} 
                         className="w-16 h-16"
+                        width={64}
+                        height={64}
                       />
                     </div>
                     <h3 className="text-white text-xl font-medium mb-2">{option.title}</h3>
@@ -191,11 +196,11 @@ export default function DownloadPage() {
                         >
                           {loadingStates[option.id] ? (
                             <div className="flex items-center justify-center">
-                              <l-mirage
-                                size="50"
-                                speed="1.5" 
-                                color="#0a0a0a"
-                              />
+                              {typeof window !== 'undefined' && (
+                                <div dangerouslySetInnerHTML={{ 
+                                  __html: `<l-mirage size="50" speed="1.5" color="#0a0a0a"></l-mirage>` 
+                                }} />
+                              )}
                             </div>
                           ) : successStates[option.id] ? (
                             <span className="inline-block transition-transform duration-500 transform hover:scale-105">

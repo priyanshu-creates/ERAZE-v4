@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
   spotlight?: boolean;
@@ -33,18 +33,19 @@ const SpotlightCard = React.forwardRef<HTMLDivElement, SpotlightCardProps>(
     },
     ref
   ) => {
-    const cardRef = useRef<HTMLDivElement>(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isMouseOver, setIsMouseOver] = useState(false);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!cardRef.current) return;
+      if (!ref) return;
       
-      const rect = cardRef.current.getBoundingClientRect();
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
+      const rect = (ref as React.RefObject<HTMLDivElement>).current?.getBoundingClientRect();
+      if (rect) {
+        setMousePosition({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        });
+      }
     };
 
     const handleMouseEnter = () => {
@@ -57,7 +58,7 @@ const SpotlightCard = React.forwardRef<HTMLDivElement, SpotlightCardProps>(
 
     return (
       <div
-        ref={cardRef}
+        ref={ref}
         className={cn(
           "relative overflow-hidden transition-all duration-300",
           className

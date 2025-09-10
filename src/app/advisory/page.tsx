@@ -1,7 +1,7 @@
 // Import Link component from Next.js for navigation
 import Link from "next/link";
 
-// Advisory Services page component
+// Advisory service page component
 export default function AdvisoryPage() {
   // Define services data for the related services section
   // This shows other services the company offers
@@ -42,7 +42,7 @@ export default function AdvisoryPage() {
   return (
     // Main container with minimum height to fill the screen
     <div className="min-h-screen">
-      {/* Hero Section - Introduction to the Advisory Services */}
+      {/* Hero Section - Introduction to the Advisory service */}
       <section className="relative py-20 md:py-32 overflow-hidden matrix-bg min-h-[100vh] flex items-center">
         {/* Content container with maximum width and padding */}
         <div className="max-w-[1440px] mx-auto px-6 relative z-10">
@@ -56,7 +56,7 @@ export default function AdvisoryPage() {
             </h1>
             {/* Service description */}
             <p className="text-[clamp(24px,3vw,48px)] font-normal text-[#FFFFFF] leading-[1.2] mb-8">
-              We provide expert guidance on best practices and strategies to strengthen an organization's cyber defenses and resilience.
+              We provide expert guidance on best practices and strategies to strengthen an organization&#39;s cyber defenses and resilience.
             </p>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default function AdvisoryPage() {
             </h2>
             {/* Section description */}
             <p className="text-base font-light text-[#B3B3B3] leading-[1.6] mb-8">
-              Whether you have questions, seek expert guidance, or need immediate assistance, we're only a click away
+              Whether you have questions, seek expert guidance, or need immediate assistance, we&#39;re only a click away
             </p>
             {/* Contact button linking to contact page */}
             <Link 

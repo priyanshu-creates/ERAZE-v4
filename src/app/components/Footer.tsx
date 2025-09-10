@@ -1,5 +1,6 @@
 // Import Link component from Next.js for navigation
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Footer component for the website
 export default function Footer() {
@@ -8,7 +9,7 @@ export default function Footer() {
     <div className="relative w-full" style={{ overflow: 'visible' }}>
       {/* Footer background SVG - positioned absolutely behind the footer content */}
       <div className="absolute inset-x-0 bottom-0 z-0" style={{ height: '200%', overflow: 'visible' }}>
-        <img 
+        <Image 
           src="/footer%20light.svg" 
           alt="Footer Background" 
           className="w-full h-full object-cover"
@@ -16,6 +17,8 @@ export default function Footer() {
             objectFit: 'cover',
             objectPosition: 'bottom center'
           }}
+          width={1440}
+          height={400}
         />
       </div>
       

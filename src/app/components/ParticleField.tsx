@@ -38,7 +38,7 @@ interface Particle {
 const ParticleField: React.FC = () => {
   // useRef hooks to access DOM elements and store data
   const canvasRef = useRef<HTMLCanvasElement>(null);    // Reference to canvas element
-  const animationRef = useRef<number>();                // Reference to animation frame ID
+  const animationRef = useRef<number>(0);                // Reference to animation frame ID
   const particlesRef = useRef<Particle[]>([]);          // Array of all particles
   const scrollVelocityRef = useRef<number>(0);          // Current scroll velocity
   const lastScrollYRef = useRef<number>(0);             // Last scroll position

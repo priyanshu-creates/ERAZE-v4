@@ -115,7 +115,7 @@ export default function OffensivePage() {
             </h2>
             {/* Section description */}
             <p className="text-default mb-8">
-              Whether you have questions, seek expert guidance, or need immediate assistance, we're only a click away
+              Whether you have questions, seek expert guidance, or need immediate assistance, we&#39;re only a click away
             </p>
             {/* Contact button linking to contact page */}
             <Link 
