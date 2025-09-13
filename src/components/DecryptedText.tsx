@@ -50,7 +50,7 @@ export default function DecryptedText({
   const [isScrambling, setIsScrambling] = useState<boolean>(false);
   const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set());
   const [hasAnimated, setHasAnimated] = useState<boolean>(false);
-  const [motionComponents, setMotionComponents] = useState<{ motion: { span: React.ComponentType<unknown> } } | null>(null);
+  const [motionComponents, setMotionComponents] = useState<{ motion: { span: React.ComponentType<any> } } | null>(null);
   const containerRef = useRef<HTMLSpanElement>(null);
 
   // Dynamically import framer-motion
