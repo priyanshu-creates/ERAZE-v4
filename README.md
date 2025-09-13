@@ -1,4 +1,5 @@
-# DOTDNA Clone
+# ERAZE v4
+
 
 A Next.js web application with advanced animations and performance optimizations.
 
