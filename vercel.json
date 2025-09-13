@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "includeFiles": ["next.config.ts"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "buildCommand": "next build --turbopack",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "devCommand": "next dev --turbopack",
+  "installCommand": "npm install"
+}
