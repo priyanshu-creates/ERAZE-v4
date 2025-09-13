@@ -2,12 +2,12 @@
 'use client';
 
 // Import necessary modules
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 // DualHeader component for E-RAZE cyberpunk application with scroll-triggered navigation
-export default function DualHeader() {
+const DualHeaderComponent = () => {
   // State to manage menu open/close
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // State to manage sticky navbar visibility
@@ -115,4 +115,9 @@ export default function DualHeader() {
       </header>
     </>
   );
-}
+};
+
+// Memoize the component to prevent unnecessary re-renders
+const DualHeader = memo(DualHeaderComponent);
+
+export default DualHeader;

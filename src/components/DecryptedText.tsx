@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, CSSProperties } from 'react';
-import { motion, MotionProps } from 'framer-motion';
 
-interface DecryptedTextProps extends Omit<MotionProps, 'children'> {
+interface DecryptedTextProps {
   text: string;
   speed?: number;
   maxIterations?: number;
@@ -51,9 +50,65 @@ export default function DecryptedText({
   const [isScrambling, setIsScrambling] = useState<boolean>(false);
   const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set());
   const [hasAnimated, setHasAnimated] = useState<boolean>(false);
+  const [motionComponents, setMotionComponents] = useState<{ motion: { span: React.ComponentType<unknown> } } | null>(null);
   const containerRef = useRef<HTMLSpanElement>(null);
 
+  // Dynamically import framer-motion
   useEffect(() => {
+    const loadMotionComponents = async () => {
+      const motion = await import('framer-motion');
+      setMotionComponents({
+        motion: {
+          span: motion.motion.span
+        }
+      });
+    };
+    
+    loadMotionComponents();
+  }, []);
+
+  // First useEffect - always called
+  useEffect(() => {
+    // This is a placeholder to ensure the first useEffect is always called
+  }, []);
+
+  // Second useEffect - always called but does nothing when condition is not met
+  useEffect(() => {
+    if (animateOn !== 'view' && animateOn !== 'both') return;
+
+    const observerCallback: IntersectionObserverCallback = entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setIsHovering(true);
+          setHasAnimated(true);
+        }
+      });
+    };
+
+    const observerOptions: IntersectionObserverInit = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const currentRef = containerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [animateOn, hasAnimated]);
+
+  // Third useEffect - always called
+  useEffect(() => {
+    // Only run animation logic if motion components are loaded
+    if (!motionComponents) return;
+    
     let interval: NodeJS.Timeout | undefined;
     let currentIteration = 0;
 
@@ -160,39 +215,15 @@ export default function DecryptedText({
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly]);
+  }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly, motionComponents]);
 
-  useEffect(() => {
-    if (animateOn !== 'view' && animateOn !== 'both') return;
+  // If motion components are not loaded yet, render a simple span
+  if (!motionComponents) {
+    return <span className={parentClassName}>{displayText}</span>;
+  }
 
-    const observerCallback: IntersectionObserverCallback = entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setIsHovering(true);
-          setHasAnimated(true);
-        }
-      });
-    };
-
-    const observerOptions: IntersectionObserverInit = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const currentRef = containerRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [animateOn, hasAnimated]);
-
+  const { motion } = motionComponents;
+  const MotionSpan = motion.span;
   const hoverProps =
     animateOn === 'hover' || animateOn === 'both'
       ? {
@@ -202,7 +233,7 @@ export default function DecryptedText({
       : {};
 
   return (
-    <motion.span className={parentClassName} ref={containerRef} style={styles.wrapper} {...hoverProps} {...props}>
+    <MotionSpan className={parentClassName} ref={containerRef} style={styles.wrapper} {...hoverProps} {...props}>
       <span style={styles.srOnly}>{displayText}</span>
 
       <span aria-hidden="true">
@@ -216,6 +247,6 @@ export default function DecryptedText({
           );
         })}
       </span>
-    </motion.span>
+    </MotionSpan>
   );
 }

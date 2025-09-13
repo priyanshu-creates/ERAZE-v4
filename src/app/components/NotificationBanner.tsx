@@ -2,9 +2,10 @@
 'use client';
 
 import Image from 'next/image';
+import { memo } from 'react';
 
 // NotificationBanner component for displaying download notification
-export default function NotificationBanner() {
+const NotificationBannerComponent = () => {
   return (
     // Banner container with responsive margins and positioning
     <div className="mt-[86px] mb-6 mx-4 sm:mx-8 lg:mx-[39px] h-10 sm:h-[45px] lg:h-[51px] bg-[rgba(127,226,0,0.9)] flex items-center justify-between px-[15px] z-[110]">
@@ -27,4 +28,9 @@ export default function NotificationBanner() {
       />
     </div>
   );
-}
+};
+
+// Memoize the component to prevent unnecessary re-renders
+const NotificationBanner = memo(NotificationBannerComponent);
+
+export default NotificationBanner;

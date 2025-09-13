@@ -131,7 +131,7 @@ export default function Home() {
         
         {/* Container with responsive margin from left and right sides of viewport */}
         <div 
-          className="absolute flex flex-col z-[112]"
+          className="absolute flex flex-col z-[112] animate-subtle-hover"
           style={{ 
             width: 'calc(100vw - 78px)', // 78px = 39px margin on each side
             height: 'auto',
@@ -144,7 +144,7 @@ export default function Home() {
           <Image 
             src="/hero.svg" 
             alt="Hero Background" 
-            className="relative w-full" // Changed to responsive width
+            className="relative w-full" // Removed animation class from here
             style={{
               maxWidth: '100%',
               height: 'auto',
@@ -153,6 +153,8 @@ export default function Home() {
             }}
             width={1235}
             height={536}
+            loading="eager" // For above-the-fold images
+            priority={true} // For critical images
           />
         </div>
       </section>

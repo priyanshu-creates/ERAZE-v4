@@ -4,9 +4,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import DualHeader from "@/app/components/DualHeader";
 import Footer from "@/app/components/Footer";
-import ParticleField from "@/app/components/ParticleField";
 import DownloadButton from "@/app/components/DownloadButton";
 import NotificationBanner from "@/app/components/NotificationBanner";
+import Preloader from "@/components/Preloader";
+import ParticleFieldClient from "@/app/components/ParticleFieldClient";
 
 // Configure Geist font for the application
 // Geist is a variable font that provides excellent readability
@@ -24,8 +25,8 @@ const geistMono = Geist_Mono({
 // Define metadata for the application
 // This includes the title and description that appear in browser tabs and search results
 export const metadata: Metadata = {
-  title: "E-RAZE | Cyberpunk Cybersecurity",
-  description: "Cyberpunk-Style Cybersecurity Solutions",
+  title: "E-RAZE",
+  description: "Cybersecurity Solutions",
 };
 
 // Root layout component that wraps all pages
@@ -42,8 +43,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0A0F0A] text-white min-h-screen flex flex-col font-sans`}
       >
-        {/* Particle field background */}
-        <ParticleField />
+        <Preloader />
+        {/* Particle field background - dynamically imported for better performance */}
+        <ParticleFieldClient />
         {/* E-RAZE Dual Header with scroll-triggered navigation */}
         <DualHeader />
         {/* Notification Banner Container - without the DOWNLOAD button */}

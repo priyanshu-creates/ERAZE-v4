@@ -37,11 +37,6 @@ export default function Footer() {
             <div>
               <h4 className="tagline mb-4">[ s e r v i c e s ]</h4>
               <ul className="space-y-2">
-                <li><Link href="/detection" className="text-[#8B8B8B] hover:text-[#A3FF78] transition-colors duration-300">Detection and Response</Link></li>
-                <li><Link href="/offensive" className="text-[#8B8B8B] hover:text-[#A3FF78] transition-colors duration-300">Offensive Security</Link></li>
-                <li><Link href="/NIS2" className="text-[#8B8B8B] hover:text-[#A3FF78] transition-colors duration-300">NIS2</Link></li>
-                <li><Link href="/reporting" className="text-[#8B8B8B] hover:text-[#A3FF78] transition-colors duration-300">Reporting and Analytics</Link></li>
-                <li><Link href="/advisory" className="text-[#8B8B8B] hover:text-[#A3FF78] transition-colors duration-300">Advisory Services</Link></li>
               </ul>
             </div>
             

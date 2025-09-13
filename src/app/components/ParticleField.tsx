@@ -17,6 +17,9 @@ interface Particle {
   maxLife: number;    // Maximum age before particle resets
 }
 
+// Throttle function type
+type ThrottleFunction = (...args: unknown[]) => void;
+
 /**
  * ParticleField Component
  * 
@@ -44,6 +47,22 @@ const ParticleField: React.FC = () => {
   const lastScrollYRef = useRef<number>(0);             // Last scroll position
   const lastTimeRef = useRef<number>(0);                // Last timestamp for velocity calculation
   const decayTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Timeout for velocity decay
+  // Add frame rate limiting
+  const targetFPS = 60;
+  const frameInterval = 1000 / targetFPS;
+  const lastFrameTimeRef = useRef<number>(0);
+
+  // Throttle function for scroll events
+  const throttle = (func: (...args: unknown[]) => void, limit: number): ThrottleFunction => {
+    let inThrottle = false;
+    return function(...args: unknown[]) {
+      if (!inThrottle) {
+        func(...args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    }
+  };
 
   // useEffect runs when component mounts and sets up the particle system
   useEffect(() => {
@@ -61,7 +80,8 @@ const ParticleField: React.FC = () => {
     
     // Set initial canvas size and listen for window resize
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    const throttledResizeCanvas = throttle(resizeCanvas, 100);
+    window.addEventListener('resize', throttledResizeCanvas);
 
     // Scroll event handler to calculate velocity
     const handleScroll = () => {
@@ -92,8 +112,9 @@ const ParticleField: React.FC = () => {
       lastTimeRef.current = currentTime;
     };
 
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    // Add scroll event listener with throttling
+    const throttledHandleScroll = throttle(handleScroll, 16); // ~60fps
+    window.addEventListener('scroll', throttledHandleScroll);
 
     // Function to create a new particle with random properties
     const createParticle = (): Particle => {
@@ -109,14 +130,21 @@ const ParticleField: React.FC = () => {
       };
     };
 
-    // Initialize particles array with 100 particles
-    const maxParticles = 250;
+    // Initialize particles array with 100 particles (reduced from 250)
+    const maxParticles = 100;
     for (let i = 0; i < maxParticles; i++) {
       particlesRef.current.push(createParticle());
     }
 
     // Main animation function - runs every frame
-    const animate = () => {
+    const animate = (currentTime: number) => {
+      // Frame rate limiting
+      if (currentTime - lastFrameTimeRef.current < frameInterval) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      lastFrameTimeRef.current = currentTime;
+      
       // Clear the entire canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -195,7 +223,7 @@ const ParticleField: React.FC = () => {
     };
 
     // Start the animation loop
-    animate();
+    animate(0);
 
     // Cleanup function - runs when component unmounts
     return () => {
@@ -204,15 +232,15 @@ const ParticleField: React.FC = () => {
         cancelAnimationFrame(animationRef.current);
       }
       // Remove event listeners
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', throttledResizeCanvas);
+      window.removeEventListener('scroll', throttledHandleScroll);
       
       // Clear decay timeout if it exists
       if (decayTimeoutRef.current) {
         clearTimeout(decayTimeoutRef.current);
       }
     };
-  }, []); // Empty dependency array means this runs once when component mounts
+  }, [frameInterval]); // Add frameInterval to dependency array
 
   return (
     <canvas

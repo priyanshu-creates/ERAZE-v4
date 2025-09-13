@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import './tilted-card.css';
 
 const springValues = {
@@ -50,20 +49,104 @@ export default function TiltedCard({
   spotlightIntensity = "80px" // Rolled back to previous intensity
 }: TiltedCardProps) {
   const ref = useRef<HTMLElement>(null);
-
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useSpring(useMotionValue(0), springValues);
-  const rotateY = useSpring(useMotionValue(0), springValues);
-  const scale = useSpring(1, springValues);
-  const opacity = useSpring(0);
-  const rotateFigcaption = useSpring(0, {
-    stiffness: 350,
-    damping: 30,
-    mass: 1
-  });
-
+  const [motionModules, setMotionModules] = useState<{ 
+    motion: React.ComponentType<unknown>; 
+    useMotionValue: (value: number) => { set: (value: number) => void; get: () => number }; 
+    useSpring: (value: unknown, options: unknown) => unknown 
+  } | null>(null);
+  // Initialize all hooks at the top level
+  const [motionValues, setMotionValues] = useState<{
+    x: { set: (value: number) => void; get: () => number };
+    y: { set: (value: number) => void; get: () => number };
+    rotateX: { set: (value: number) => void; get: () => number };
+    rotateY: { set: (value: number) => void; get: () => number };
+    scale: { set: (value: number) => void; get: () => number };
+    opacity: { set: (value: number) => void; get: () => number };
+    rotateFigcaption: { set: (value: number) => void; get: () => number };
+  } | null>(null);
   const [lastY, setLastY] = useState(0);
+
+  // Dynamically import framer-motion modules
+  useEffect(() => {
+    const loadMotionModules = async () => {
+      const motion = await import('framer-motion');
+      setMotionModules({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        motion: motion.motion as any,
+        useMotionValue: motion.useMotionValue,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        useSpring: motion.useSpring as any
+      });
+      
+      // Initialize motion values after modules are loaded
+      const x = motion.useMotionValue(0);
+      const y = motion.useMotionValue(0);
+      const rotateX = motion.useSpring(motion.useMotionValue(0), springValues);
+      const rotateY = motion.useSpring(motion.useMotionValue(0), springValues);
+      const scale = motion.useSpring(1, springValues);
+      const opacity = motion.useSpring(0);
+      const rotateFigcaption = motion.useSpring(0, {
+        stiffness: 350,
+        damping: 30,
+        mass: 1
+      });
+      
+      setMotionValues({
+        x,
+        y,
+        rotateX,
+        rotateY,
+        scale,
+        opacity,
+        rotateFigcaption
+      });
+    };
+    
+    loadMotionModules();
+  }, []);
+
+  // If motion modules are not loaded yet, render a simple placeholder
+  if (!motionModules || !motionValues) {
+    return (
+      <figure
+        className={`tilted-card-figure ${className}`}
+        style={{
+          height: containerHeight,
+          width: containerWidth
+        }}
+      >
+        <div className="tilted-card-inner" style={{ width: containerWidth, height: containerHeight }}>
+          {children ? (
+            <div className="tilted-card-content">
+              {children}
+            </div>
+          ) : (
+            <>
+              {imageSrc && (
+                <img // Using img instead of Image for simplicity in this placeholder
+                  src={imageSrc}
+                  alt={altText}
+                  className="tilted-card-img"
+                  style={{
+                    width: imageWidth,
+                    height: imageHeight
+                  }}
+                />
+              )}
+              {displayOverlayContent && overlayContent && (
+                <div className="tilted-card-overlay">{overlayContent}</div>
+              )}
+            </>
+          )}
+        </div>
+      </figure>
+    );
+  }
+
+  const { motion } = motionModules;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const MotionDiv = motion as any;
+  const { x, y, rotateX, rotateY, scale, opacity, rotateFigcaption } = motionValues;
 
   function handleMouse(e: React.MouseEvent) {
     if (!ref.current) return;
@@ -115,7 +198,7 @@ export default function TiltedCard({
         <div className="tilted-card-mobile-alert">This effect is not optimized for mobile. Check on desktop.</div>
       )}
 
-      <motion.div
+      <MotionDiv
         className="tilted-card-inner"
         style={{
           width: containerWidth,
@@ -131,7 +214,7 @@ export default function TiltedCard({
           </div>
         ) : (
           <>
-            <motion.img
+            <MotionDiv
               src={imageSrc}
               alt={altText}
               className="tilted-card-img"
@@ -141,12 +224,12 @@ export default function TiltedCard({
               }}
             />
             {displayOverlayContent && overlayContent && (
-              <motion.div className="tilted-card-overlay">{overlayContent}</motion.div>
+              <MotionDiv className="tilted-card-overlay">{overlayContent}</MotionDiv>
             )}
           </>
         )}
         {/* Spotlight effect */}
-        <motion.div
+        <MotionDiv
           className="tilted-card-spotlight"
           style={{
             background: `radial-gradient(circle at center, ${spotlightColor}, transparent)`,
@@ -159,10 +242,10 @@ export default function TiltedCard({
             transition: "opacity 0.2s ease",
           }}
         />
-      </motion.div>
+      </MotionDiv>
 
       {showTooltip && (
-        <motion.figcaption
+        <MotionDiv
           className="tilted-card-caption"
           style={{
             x,
@@ -172,7 +255,7 @@ export default function TiltedCard({
           }}
         >
           {captionText}
-        </motion.figcaption>
+        </MotionDiv>
       )}
     </figure>
   );
